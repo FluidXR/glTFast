@@ -101,8 +101,13 @@ namespace GLTFast.Materials {
 
         protected override ShaderMode? ApplyTransmissionShaderFeatures(MaterialBase gltfMaterial) {
             if (!s_SupportsCameraOpaqueTexture) {
-                // Fall back to makeshift approximation via premultiply or blend
-                return base.ApplyTransmissionShaderFeatures(gltfMaterial);
+                // When Opaque Texture is disabled, create a glass material with transparent blend mode
+                if (gltfMaterial?.Extensions?.KHR_materials_transmission != null
+                    && gltfMaterial.Extensions.KHR_materials_transmission.transmissionFactor > 0f)
+                {
+                    return ShaderMode.Blend;
+                }
+                return null;
             }
 
             if (gltfMaterial?.Extensions?.KHR_materials_transmission != null
@@ -137,6 +142,19 @@ namespace GLTFast.Materials {
                         // TransmissionTextureUVChannelProperty // TODO: add support in shader
                     )) { }
                 }
+                return renderQueue;
+            }
+
+            // When Opaque Texture is disabled, create a glass-like transparent material
+            if (transmission.transmissionFactor > 0f) {
+                // Apply glass-like transparency by reducing base color alpha and increasing metallic/specular properties
+                baseColorLinear.a *= (1f - transmission.transmissionFactor);
+                
+                // Set up glass-like material properties
+                material.SetFloat(MaterialProperty.Metallic, Mathf.Max(material.GetFloat(MaterialProperty.Metallic), 0.1f));
+                material.SetFloat(MaterialProperty.RoughnessFactor, Mathf.Min(material.GetFloat(MaterialProperty.RoughnessFactor), 0.1f));
+                
+                renderQueue = RenderQueue.Transparent;
                 return renderQueue;
             }
 
