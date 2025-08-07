@@ -156,7 +156,7 @@ namespace GLTFast.Materials {
         /// <summary>Shader property ID for property clearcoatNormalTexture_ST</summary>
         public static readonly int ClearcoatNormalTextureScaleTransformProperty = Shader.PropertyToID("clearcoatNormalTexture_ST");
         /// <summary>Shader property ID for property clearcoatNormalTextureRotation</summary>
-        public static readonly int ClearcoatNormalTextureRotationProperty = Shader.PropertyToID("clearcoatNormalTextureRotation");
+        public static readonly int ClearcoatNormalTextureRotationProperty = Shader.PropertyToID("_Clearcoat_Normal_Texture_Rotation");
         /// <summary>Shader property ID for property clearcoatNormalTexture_texCoord</summary>
         public static readonly int ClearcoatNormalTextureTexCoordProperty = Shader.PropertyToID("clearcoatNormalTexture_texCoord");
         /// <summary>Shader keyword _CLEARCOAT</summary>

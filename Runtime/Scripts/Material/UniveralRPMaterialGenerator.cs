@@ -154,6 +154,9 @@ namespace GLTFast.Materials {
                 material.SetFloat(MaterialProperty.Metallic, Mathf.Max(material.GetFloat(MaterialProperty.Metallic), 0.1f));
                 material.SetFloat(MaterialProperty.RoughnessFactor, Mathf.Min(material.GetFloat(MaterialProperty.RoughnessFactor), 0.1f));
                 
+                // Set front face culling for correct transmission when Opaque Texture is disabled
+                material.SetFloat(MaterialProperty.Cull, (int)CullMode.Back);
+                
                 renderQueue = RenderQueue.Transparent;
                 return renderQueue;
             }
