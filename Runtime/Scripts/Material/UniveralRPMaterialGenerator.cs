@@ -155,6 +155,9 @@ namespace GLTFast.Materials {
                 material.SetFloat(MaterialProperty.RoughnessFactor, Mathf.Min(material.GetFloat(MaterialProperty.RoughnessFactor), 0.1f));
                 material.SetFloat(MaterialProperty.Cull, (int)CullMode.Back); // Front faces only
                 
+                // Enable preserve specular lighting
+                material.SetFloat("_BlendModePreserveSpecular", 1f);
+                
                 renderQueue = RenderQueue.Transparent;
                 return renderQueue;
             }
