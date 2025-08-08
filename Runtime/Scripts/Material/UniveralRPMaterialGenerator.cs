@@ -153,6 +153,7 @@ namespace GLTFast.Materials {
                 // Set up glass-like material properties
                 material.SetFloat(MaterialProperty.Metallic, Mathf.Max(material.GetFloat(MaterialProperty.Metallic), 0.1f));
                 material.SetFloat(MaterialProperty.RoughnessFactor, Mathf.Min(material.GetFloat(MaterialProperty.RoughnessFactor), 0.1f));
+                material.SetFloat(MaterialProperty.Cull, (int)CullMode.Back); // Front faces only
                 
                 renderQueue = RenderQueue.Transparent;
                 return renderQueue;
